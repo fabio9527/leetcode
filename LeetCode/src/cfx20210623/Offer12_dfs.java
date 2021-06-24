@@ -1,6 +1,6 @@
 package cfx20210623;
 
-public class Offer12 {
+public class Offer12_dfs {
 
     /**
      * 给定一个m x n 二维字符网格board 和一个字符串单词word 。如果word 存在于网格中，返回 true ；否则，返回 false 。
@@ -32,11 +32,10 @@ public class Offer12 {
         }
 
         char[] chars = word.toCharArray();
-
+        boolean[][] isUsed = new boolean[y_length][x_length];
 
         for(int y=0;y<y_length;y++){
             for(int x=0;x<x_length;x++){
-                boolean[][] isUsed = new boolean[y_length][x_length];
                 if(chars[0]==board[y][x] && dfs(board,chars,0,isUsed,y,x)){
 
                     return true;
@@ -63,52 +62,48 @@ public class Offer12 {
             return true;
         }
 
-        boolean isExist = false;
-
         if(y>0 && !isUsed[y-1][x] &&  board[y-1][x] == chars[currentCharIndex+1] && dfs(board,chars,currentCharIndex+1,isUsed,y-1,x)){
 
-            isExist = true;
+            return true;
         }
 
         if(y<y_max && !isUsed[y+1][x] && board[y+1][x] == chars[currentCharIndex+1] && dfs(board,chars,currentCharIndex+1,isUsed,y+1,x)){
 
-            isExist = true;
+            return true;
         }
 
         if(x>0 && !isUsed[y][x-1] && board[y][x-1] == chars[currentCharIndex+1] && dfs(board,chars,currentCharIndex+1,isUsed,y,x-1)){
 
-            isExist = true;
+            return true;
         }
 
         if(x<x_max && !isUsed[y][x+1] && board[y][x+1] == chars[currentCharIndex+1] && dfs(board,chars,currentCharIndex+1,isUsed,y,x+1)){
 
-            isExist = true;
+            return true;
         }
 
-        if(!isExist){
-            isUsed[y][x]=false;
-        }
-        return isExist;
+        isUsed[y][x]=false;
+        return false;
     }
 
     public static void main(String[] args) {
-        Offer12 offer12 = new Offer12();
+        Offer12_dfs offer12 = new Offer12_dfs();
        /* char[][] board = {{'A','B','C','E'},
                           {'S','F','C','S'},
                           {'A','D','E','E'}};*/
         /*char[][] board ={{'C','A','A'},
                          {'A','A','A'},
                          {'B','C','D'}};*/
-        /*char[][] board = {{'A','B','C','E'},
-                          {'S','F','E','S'},
-                          {'A','D','E','E'}};*/
-
         char[][] board = {{'A','B','C','E'},
-                          {'S','F','C','S'},
+                          {'S','F','E','S'},
                           {'A','D','E','E'}};
 
-        //System.out.print(offer12.exist(board,"ABCESEEEFS"));
-        System.out.print(offer12.exist(board,"ABCB"));
+        /*char[][] board = {{'A','B','C','E'},
+                          {'S','F','C','S'},
+                          {'A','D','E','E'}};*/
+
+        System.out.print(offer12.exist(board,"ABCESEEEFS"));
+//        System.out.print(offer12.exist(board,"ABCB"));
         //System.out.print(board[2][3]);
     }
 }
