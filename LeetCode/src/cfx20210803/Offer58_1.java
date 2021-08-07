@@ -1,5 +1,6 @@
 package cfx20210803;
 
+import java.lang.annotation.ElementType;
 import java.util.LinkedList;
 
 public class Offer58_1 {
@@ -10,32 +11,51 @@ public class Offer58_1 {
      * @param s
      * @return
      */
-    public String reverseWords(String s) {
+    public String reverseWords_1(String s) {
         String trim = s.trim();
         char[] chars = trim.toCharArray();
         StringBuilder result = new StringBuilder();
         LinkedList<Character> stack = new LinkedList<>();
-        for(int i = chars.length-1;i>=0;i--){
-            while (i>=0 && ' ' == chars[i]){
+        for (int i = chars.length - 1; i >= 0; i--) {
+            while (i >= 0 && ' ' == chars[i]) {
                 i--;
             }
-            while (i>=0 && ' ' != chars[i]){
+            while (i >= 0 && ' ' != chars[i]) {
                 stack.addLast(chars[i]);
                 i--;
             }
-            while (stack.size()>0){
+            while (stack.size() > 0) {
                 result.append(stack.removeLast());
             }
-            if(i>=0){
+            if (i >= 0) {
                 result.append(chars[i]);
             }
         }
         return result.toString();
     }
 
+    public String reverseWords(String s) {
+        if (null == s || s.length() == 0) {
+            return new String();
+        }
+        String[] words = s.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (int i = words.length - 1; i >= 0; i--) {
+            if (words[i].length() > 0) {
+                result.append(words[i]);
+                result.append(" ");
+            }
+        }
+        if (result.length() > 0) {
+            return result.substring(0, result.length() - 1);
+        } else {
+            return result.toString();
+        }
+    }
+
     public static void main(String[] args) {
         Offer58_1 offer58_1 = new Offer58_1();
-        String s =" the sky        is blue ";
+        String s = " the sky        is blue ";
         System.out.print(offer58_1.reverseWords(s));
     }
 }
